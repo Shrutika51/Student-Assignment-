@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submissions - Assignment Portal</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Assignment Submissions</h1>
+
+    <h2>{{ assignment["title"] }}</h2>
+
+    <p>
+        <b>Subject:</b>
+        {{ assignment["subject"] }}
+    </p>
+
+    <p>
+        <b>Maximum Marks:</b>
+        {{ assignment["max_marks"] }}
+    </p>
+
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    <hr>
+
+    {% for submission in submissions %}
+
+    <div class="card">
+
+        <h2>{{ submission["name"] }}</h2>
+
+        <p>
+            <b>Email:</b>
+            {{ submission["email"] }}
+        </p>
+
+        <p>
+            <b>Project Link:</b>
+
+            <a href="{{ submission['project_link'] }}"
+               target="_blank">
+                Open Project
+            </a>
+        </p>
+
+        <p>
+            <b>Work Notes:</b>
+            {{ submission["work_notes"] }}
+        </p>
+
+        <p>
+            <b>Submitted At:</b>
+            {{ submission["submitted_at"] }}
+        </p>
+
+        <p>
+            <b>Status:</b>
+            {{ submission["status"] }}
+        </p>
+
+        <hr>
+
+        <h3>Grade Submission</h3>
+
+        <form method="POST">
+
+            <input
+                type="hidden"
+                name="submission_id"
+                value="{{ submission['id'] }}"
+            >
+
+            <label>Marks</label>
+
+            <input
+                type="number"
+                name="marks"
+                min="0"
+                max="{{ assignment['max_marks'] }}"
+                value="{{ submission['marks'] or '' }}"
+                placeholder="Enter marks"
+                required
+            >
+
+            <label>Faculty Feedback</label>
+
+            <textarea
+                name="feedback"
+                placeholder="Enter feedback"
+            >{{ submission["feedback"] or "" }}</textarea>
+
+            <button type="submit">
+                Save Grade
+            </button>
+
+        </form>
+
+    </div>
+
+    {% else %}
+
+    <div class="card">
+        <h3>No submissions yet.</h3>
+        <p>No student has submitted this assignment.</p>
+    </div>
+
+    {% endfor %}
+
+    <br>
+
+    <a href="/faculty">
+        ← Back to Faculty Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

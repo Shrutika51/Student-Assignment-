@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Faculty Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Faculty Dashboard</h1>
+
+<p>Welcome, {{ session["name"] }}</p>
+
+<a href="/create-assignment">
+    <button>Create Assignment</button>
+</a>
+
+<a href="/logout">
+    <button>Logout</button>
+</a>
+
+<hr>
+
+{% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+        <p class="message">{{ message }}</p>
+    {% endfor %}
+{% endwith %}
+
+<h2>My Assignments</h2>
+
+{% for assignment in assignments %}
+
+<div class="card">
+
+    <h3>{{ assignment["title"] }}</h3>
+
+    <p>
+        <b>Subject:</b>
+        {{ assignment["subject"] }}
+    </p>
+
+    <p>
+        <b>Due Date:</b>
+        {{ assignment["due_date"] }}
+    </p>
+
+    <p>
+        <b>Maximum Marks:</b>
+        {{ assignment["max_marks"] }}
+    </p>
+
+    <a href="/submissions/{{ assignment['id'] }}">
+        View Submissions
+    </a>
+
+</div>
+
+{% else %}
+
+<p>No assignments created yet.</p>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>

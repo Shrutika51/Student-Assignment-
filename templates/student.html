@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Student Assignment Portal</h1>
+
+<p>Welcome, {{ session["name"] }}</p>
+
+<a href="/logout">
+    <button>Logout</button>
+</a>
+
+{% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+        <p class="message">{{ message }}</p>
+    {% endfor %}
+{% endwith %}
+
+<hr>
+
+{% for assignment in assignments %}
+
+<div class="card">
+
+<h2>{{ assignment["title"] }}</h2>
+
+<p>
+<b>Subject:</b>
+{{ assignment["subject"] }}
+</p>
+
+<p>
+<b>Description:</b>
+{{ assignment["description"] }}
+</p>
+
+<p>
+<b>Due Date:</b>
+{{ assignment["due_date"] }}
+</p>
+
+<p>
+<b>Maximum Marks:</b>
+{{ assignment["max_marks"] }}
+</p>
+
+{% if assignment["submission_id"] %}
+
+    <h3>Status: {{ assignment["status"] }}</h3>
+
+    {% if assignment["marks"] is not none %}
+
+        <p>
+            <b>Marks:</b>
+            {{ assignment["marks"] }} /
+            {{ assignment["max_marks"] }}
+        </p>
+
+        <p>
+            <b>Faculty Feedback:</b>
+            {{ assignment["feedback"] }}
+        </p>
+
+    {% endif %}
+
+{% else %}
+
+<form method="POST"
+      action="/submit/{{ assignment['id'] }}">
+
+    <input
+        type="url"
+        name="project_link"
+        placeholder="GitHub / Project Link"
+        required
+    >
+
+    <textarea
+        name="work_notes"
+        placeholder="Work Notes"
+        required
+    ></textarea>
+
+    <button type="submit">
+        Submit Assignment
+    </button>
+
+</form>
+
+{% endif %}
+
+</div>
+
+{% else %}
+
+<p>No assignments available.</p>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>

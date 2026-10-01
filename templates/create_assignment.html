@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Assignment</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Create Assignment</h1>
+
+<form method="POST">
+
+    <input
+        type="text"
+        name="title"
+        placeholder="Assignment Title"
+        required
+    >
+
+    <input
+        type="text"
+        name="subject"
+        placeholder="Subject"
+        required
+    >
+
+    <textarea
+        name="description"
+        placeholder="Assignment Description"
+    ></textarea>
+
+    <label>Due Date</label>
+
+    <input
+        type="date"
+        name="due_date"
+        required
+    >
+
+    <input
+        type="number"
+        name="max_marks"
+        placeholder="Maximum Marks"
+        min="1"
+        required
+    >
+
+    <button type="submit">
+        Create Assignment
+    </button>
+
+</form>
+
+<br>
+
+<a href="/faculty">Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>
